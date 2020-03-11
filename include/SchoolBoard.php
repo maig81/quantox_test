@@ -66,6 +66,6 @@ class SchoolBoard
             'average' => $average,
             'final_result' => $pass
         ];
-        return ArrayToXml::convert($report, 'ssss');
+        return ArrayToXml::convert($report);
     }
 }
