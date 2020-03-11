@@ -54,6 +54,6 @@ class Student
         if (is_array($student)) {
             return $student;
         }
-        return [];
+        die ("No such student");
     }
 }
