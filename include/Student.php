@@ -23,6 +23,22 @@ class Student
         return new SchoolBoard($this->schoolBoardID);
     }
 
+    public function getGrades()
+    {
+        if ($this->grades) {
+            return explode(',', $this->grades);
+        }
+        return [0];
+    }
+
+    public function getAverageGrade()
+    {
+        $grades = $this->getGrades();
+        $average = array_sum($grades)/count($grades);
+        return $average;
+
+    }
+
     private function fetchStudentFromDatabase(int $id)
     {
         $db = new Database();
