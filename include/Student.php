@@ -11,7 +11,7 @@ class Student
 
     public function __construct(int $id)
     {
-        $dbStudent = $this->fetchUser($id);
+        $dbStudent = $this->fetchStudentFromDatabase($id);
         $this->id = $dbStudent['id'];
         $this->name = $dbStudent['name'];
         $this->grades = $dbStudent['grades'];
@@ -23,13 +23,13 @@ class Student
         return new SchoolBoard($this->schoolBoardID);
     }
 
-    private function fetchUser($id)
+    private function fetchStudentFromDatabase(int $id)
     {
-        return [
-            'id' => $id,
-            'name' => 'Test user',
-            'grades' => [1, 5, 10],
-            'schoolBoardID' => 1
-        ];
+        $db = new Database();
+        $student = $db->connection->queryFirstRow('SELECT * FROM students WHERE id=%s', $id);
+        if (is_array($student)) {
+            return $student;
+        }
+        return [];
     }
 }

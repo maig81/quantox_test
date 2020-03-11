@@ -9,16 +9,18 @@ class SchoolBoard
 
     public function __construct(int $id)
     {
-        $dbBoard = $this->fetchBoard($id);
+        $dbBoard = $this->fetchUserFromDatabase($id);
         $this->id = $dbBoard['id'];
         $this->name = $dbBoard['name'];
     }
 
-    private function fetchBoard($id)
+    private function fetchUserFromDatabase(int $id)
     {
-        return [
-            'id' => $id,
-            'name' => 'Test user'
-        ];
+        $db = new Database();
+        $student = $db->connection->queryFirstRow('SELECT * FROM school_board WHERE id=%s', $id);
+        if (is_array($student)) {
+            return $student;
+        }
+        return [];
     }
 }
