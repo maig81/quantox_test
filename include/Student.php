@@ -4,17 +4,17 @@ namespace Quantox;
 
 class Student
 {
-    private $id;
-    private $name;
-    private $grades;
-    private $schoolBoardID;
+    public $id;
+    public $name;
+    public $grades;
+    public $schoolBoardID;
 
     public function __construct(int $id)
     {
         $dbStudent = $this->fetchStudentFromDatabase($id);
         $this->id = $dbStudent['id'];
         $this->name = $dbStudent['name'];
-        $this->grades = $dbStudent['grades'];
+        $this->grades = $this->getGrades($dbStudent['grades']);
         $this->schoolBoardID = $dbStudent['schoolBoardID'];
     }
 
@@ -23,20 +23,28 @@ class Student
         return new SchoolBoard($this->schoolBoardID);
     }
 
-    public function getGrades()
+    public function getGrades($grades)
     {
-        if ($this->grades) {
-            return explode(',', $this->grades);
+        if ($grades) {
+            return explode(',', $grades);
         }
         return [0];
     }
 
-    public function getAverageGrade()
+    public static function getAverageGrade(array $grades)
     {
-        $grades = $this->getGrades();
         $average = array_sum($grades)/count($grades);
         return $average;
+    }
 
+    public function getBiggestGrade()
+    {
+        return max($this->grades);
+    }
+
+    public function getReport()
+    {
+        return $this->schoolBoard()->getStudentReport($this);
     }
 
     private function fetchStudentFromDatabase(int $id)

@@ -5,6 +5,7 @@
     }
   },
   "require": {
-    "sergeytsalkov/meekrodb": "*"
+    "sergeytsalkov/meekrodb": "*",
+    "spatie/array-to-xml": "^2.11"
   }
 }
