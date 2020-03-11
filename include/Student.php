@@ -18,6 +18,11 @@ class Student
         $this->schoolBoardID = $dbStudent['schoolBoardID'];
     }
 
+    public function schoolBoard()
+    {
+        return new SchoolBoard($this->schoolBoardID);
+    }
+
     private function fetchUser($id)
     {
         return [
